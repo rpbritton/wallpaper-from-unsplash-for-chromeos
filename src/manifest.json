@@ -1,0 +1,23 @@
+{
+	"manifest_version": 2,
+	"name": "Wallpaper from Url (for ChromeOS)",
+	"description": "Sets your wallpaper in ChromeOS to a image url. Works great with random wallpaper urls, like Unsplash.",
+	"homepage_url": "https://github.com/rpbritton/wallpaper-from-url-for-chromeos/",
+	"version": "1.0",
+	"permissions": [
+		"wallpaper",
+		"alarms",
+		"contextMenus",
+		"storage"
+	],
+	"icons": {
+		"16": "imgs/icon16.png",       
+		"48": "imgs/icon48.png",       
+		"128": "imgs/icon128.png",     
+		"254": "imgs/icon254.png"  
+	},
+	"background": {
+		"persistant": false,
+		"scripts": ["background.js"]
+	}
+}
