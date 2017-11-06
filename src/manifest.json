@@ -11,10 +11,10 @@
 		"storage"
 	],
 	"icons": {
-		"16": "imgs/icon16.png",       
-		"48": "imgs/icon48.png",       
-		"128": "imgs/icon128.png",     
-		"254": "imgs/icon254.png"  
+		"16": "img/icon16.png",       
+		"48": "img/icon48.png",       
+		"128": "img/icon128.png",     
+		"254": "img/icon254.png"  
 	},
 	"background": {
 		"persistant": false,
