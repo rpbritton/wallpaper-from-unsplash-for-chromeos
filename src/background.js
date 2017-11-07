@@ -46,7 +46,7 @@ function setInterval(newInterval) {
 		chrome.storage.local.set({'interval': newInterval});
 		chrome.contextMenus.update('custom', {'title': 'Custom', 'checked': false});
 		chrome.contextMenus.update('interval', {'title': `Change every: ${formatInterval(newInterval)}`});
-		addAlarm();
+		updateAlarm();
 		let iterations = 0;
 		let custom = true;
 		for (let interval of settings.intervals) {
@@ -62,7 +62,7 @@ function setInterval(newInterval) {
 	});
 }
 
-function addAlarm() {
+function updateAlarm() {
 	chrome.storage.local.get('interval', settings => {
 		if (settings.interval !== 0) {
 			chrome.alarms.create('get_wallpaper', {
@@ -149,7 +149,7 @@ chrome.runtime.getPlatformInfo(platformInfo => {
 							\n(in minutes, must be between 1 minute and 30 days, 0 for no repetition)`, settings.interval);
 						if (newInterval) {
 							newInterval = Number(newInterval);
-							if (isNaN(newInterval) || newInterval > 43200 || newInterval < 0) {
+							if (isNaN(newInterval) || newInterval >= 43200 || newInterval <= 1) {
 								alert('Error: invalid amount of time');
 								console.error('Error: invalid amount of time between alarms');
 	//							chrome.contextMenus.update('custom', {'title': 'Custom'});
@@ -170,7 +170,7 @@ chrome.runtime.getPlatformInfo(platformInfo => {
 			}
 		});
 
-		addAlarm();
+		updateAlarm();
 		chrome.alarms.onAlarm.addListener(alarm => {
 			(alarm.name == 'get_wallpaper') && getWallpaper();
 		});
