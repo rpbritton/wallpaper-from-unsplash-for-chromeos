@@ -74,7 +74,6 @@ function updateAlarm() {
 
 chrome.runtime.getPlatformInfo(platformInfo => {
 	if (platformInfo.os == 'cros') {
-
 		chrome.contextMenus.create({
 			'title': 'Skip wallpaper',
 			'contexts': ['page_action'],
@@ -93,27 +92,22 @@ chrome.runtime.getPlatformInfo(platformInfo => {
 			}, () => {
 				let iterations = 0;
 				for (let interval of settings.intervals) {
-					//let checked = (interval === settings.interval);
 					let customTitle = `Custom: ${formatInterval(settings.interval)}`;
-					//if (checked)
-					//	customTitle += `: ${formatInterval(interval)}`;
 					chrome.contextMenus.create({
 						'title': formatInterval(interval),
 						'contexts': ['page_action'],
 						'id': `${interval}`,
 						'type': 'radio',
-						'parentId': 'interval'//,
-						//'checked': checked
+						'parentId': 'interval'
 					}, () => {
 						iterations++;
 						if (iterations === settings.intervals.length) {
 							chrome.contextMenus.create({
-								'title': 'Custom',//customTitle,
+								'title': 'Custom',
 								'contexts': ['page_action'],
 								'id': 'custom',
 								'type': 'radio',
-								'parentId': 'interval'//,
-								//'checked': (customTitle !== 'Custom')
+								'parentId': 'interval'
 							});
 							setInterval(settings.interval);
 						}
@@ -122,9 +116,9 @@ chrome.runtime.getPlatformInfo(platformInfo => {
 			});
 		});
 		chrome.contextMenus.onClicked.addListener(contextMenu => {
-			if (contextMenu.menuItemId == 'refresh')
+			if (contextMenu.menuItemId === 'refresh')
 				getWallpaper();
-			if (contextMenu.menuItemId == 'url') {
+			if (contextMenu.menuItemId === 'url') {
 				chrome.storage.local.get('url', settings => {
 					let newUrl = prompt(`Enter the wallpaper url:\n(Default is "${defaultSettings.url}")`, settings.url);
 					if (newUrl) {
@@ -142,7 +136,7 @@ chrome.runtime.getPlatformInfo(platformInfo => {
 					}
 				});
 			}
-			if (contextMenu.parentMenuItemId = 'interval') {
+			if (contextMenu.parentMenuItemId === 'interval') {
 				chrome.storage.local.get(['interval', 'intervals'], settings => {
 					if (contextMenu.menuItemId === 'custom') {
 						let newInterval = prompt(`How much time should pass before fetching a new wallpaper?
